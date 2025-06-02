@@ -77,16 +77,17 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         showCard(nextCard); //カードの開示
         updateRemaining(); //山札などのカード情報を更新
         
+        boolean isSame = nextCard.getValue() == currentCard.getValue();
         boolean isWin = (guessHigh && nextCard.getValue() > currentCard.getValue()) ||
-                        (!guessHigh && nextCard.getValue() < currentCard.getValue());
-        //値が同じ → 引き分け（スコア0）・勝ち → スコア +1、currentCard を更新・負け → スコア0、ゲームオーバー
+                    (!guessHigh && nextCard.getValue() < currentCard.getValue());
+        //値が同じ → 引き分け→スコア+1・勝ち → スコア +1、currentCard を更新・負け → スコア0、ゲームオーバー
         
-        if (nextCard.getValue() == currentCard.getValue()) {
-            resultLabel.setText("引き分け！");
-            score++;
-            currentCard = nextCard; //次のカードと現在のカードの値が一致した場合,「引き分け」と表示しスコアをリセット増やし,次のカードを現在のカードとして更新
-        } else if (isWin) {
+        if (isWin || isSame) {
+        if (isSame) {
+            resultLabel.setText("引き分け！"); //次のカードと現在のカードの値が一致した場合,「引き分け」と表示しスコアをリセット増やし,次のカードを現在のカードとして更新
+        }  else {
             resultLabel.setText("正解！");
+            }
             score++;
             currentCard = nextCard; //予想が当たれば「正解」と表示し,スコアを増やし,次のカードを現在のカードとして更新
         } else {
@@ -96,7 +97,7 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         
         updateScore(); //スコアの更新
         
-        if (!isWin || deck.remaining() == 0) {
+        if (!isWin && !isSame || deck.remaining() == 0) {
             highButton.setEnabled(false);
             lowButton.setEnabled(false);
             resetButton.setEnabled(true);
