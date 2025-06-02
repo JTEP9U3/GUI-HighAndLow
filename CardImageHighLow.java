@@ -82,10 +82,10 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         //値が同じ → 引き分け（スコア0）・勝ち → スコア +1、currentCard を更新・負け → スコア0、ゲームオーバー
         
         if (nextCard.getValue() == currentCard.getValue()) {
-            resultLabel.setText("引き分け！残念！");
+            resultLabel.setText("引き分け！");
             score = 0; //次のカードと現在のカードの値が一致した場合,「引き分け」と表示しスコアをリセット
         } else if (isWin) {
-            resultLabel.setText("正解！おめでとう！");
+            resultLabel.setText("正解！");
             score++;
             currentCard = nextCard; //予想が当たれば「正解」と表示し,スコアを増やし,次のカードを現在のカードとして更新
         } else {
