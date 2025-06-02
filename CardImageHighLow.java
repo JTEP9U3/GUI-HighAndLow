@@ -56,3 +56,58 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         
         startGame(); //ゲームのスタート処理
     }
+    
+    private void startGame() { //スコア初期化、デッキをシャッフル、1枚ドローして表示
+        score = 0; //スコアを初期化
+        deck.shuffle(); //山札をシャッフル
+        currentCard = deck.drawCard(); //最初のカードを1枚引く
+        showCard(currentCard); //画像を表示
+        resultLabel.setText("High または Low を選んでください");
+        updateScore(); //スコアを初期化
+        updateRemaining(); //残りカード数表示
+    }
+    
+    private void playRound(boolean guessHigh) { //1ラウンドのプレイ
+        nextCard = deck.drawCard(); //山札からカードを引く
+        if (nextCard == null) { //カードが引けなかった場合
+            resultLabel.setText("デッキが空です。"); //山札がないことを表示
+            return; //処理を終了
+        }
+        
+        showCard(nextCard); //カードの開示
+        updateRemaining(); //山札などのカード情報を更新
+        
+        boolean isWin = (guessHigh && nextCard.getValue() > currentCard.getValue()) ||
+                        (!guessHigh && nextCard.getValue() < currentCard.getValue());
+        //値が同じ → 引き分け（スコア0）・勝ち → スコア +1、currentCard を更新・負け → スコア0、ゲームオーバー
+        
+        if (nextCard.getValue() == currentCard.getValue()) {
+            resultLabel.setText("引き分け！残念！");
+            score = 0; //次のカードと現在のカードの値が一致した場合,「引き分け」と表示しスコアをリセット
+        } else if (isWin) {
+            resultLabel.setText("正解！おめでとう！");
+            score++;
+            currentCard = nextCard; //予想が当たれば「正解」と表示し,スコアを増やし,次のカードを現在のカードとして更新
+        } else {
+            resultLabel.setText("不正解！ゲームオーバー！");
+            score = 0; //予想が外れたら「不正解」と表示し、スコアをリセット
+        }
+        
+        updateScore(); //スコアの更新
+        
+        if (!isWin || deck.remaining() == 0) {
+            highButton.setEnabled(false);
+            lowButton.setEnabled(false);
+            resetButton.setEnabled(true);
+            //ゲームが終了した（敗北,山札0枚）場合にリセットボタンのみを押せる状態にする
+        }
+    }
+    
+    private void resetGame() {
+        startGame();
+        highButton.setEnabled(true);
+        lowButton.setEnabled(true);
+        resetButton.setEnabled(false);
+        //ゲームに再挑戦するためのゲームの初期化や設定を行う処理
+    }
+    
