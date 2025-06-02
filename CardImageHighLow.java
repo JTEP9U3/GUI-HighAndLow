@@ -111,3 +111,17 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         //ゲームに再挑戦するための処理
     }
     
+    private void updateScore() {
+        scoreLabel.setText("スコア: " + score); //画面上にスコアを更新
+    }
+    
+    private void updateRemaining() {
+        remainingLabel.setText("残りカード: " + deck.remaining()); //山札に残っているカードの数を表示
+    }
+    
+    private void showCard(Card card) { //カードの画像表示処理
+        String path = "cards/" + card.getImageFileName(); //カードの画像ファイルのパス
+        ImageIcon icon = new ImageIcon(path); //画像ファイルの読み込み
+        Image scaled = icon.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH); //画像を幅150ピクセル、高さ220ピクセルにリサイズ
+        cardLabel.setIcon(new ImageIcon(scaled)); //リサイズされたカードの画像を表示
+    }
