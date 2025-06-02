@@ -125,3 +125,76 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         Image scaled = icon.getImage().getScaledInstance(150, 220, Image.SCALE_SMOOTH); //画像を幅150ピクセル、高さ220ピクセルにリサイズ
         cardLabel.setIcon(new ImageIcon(scaled)); //リサイズされたカードの画像を表示
     }
+    
+    public static void main(String[] args) { //エントリーポイント
+        SwingUtilities.invokeLater(() -> new CardImageHighLow().setVisible(true)); //GUIクラスのインスタンスを作成とウィンドウへの表示
+    }
+    
+    // ===== 内部クラス: Card =====
+    private class Card { //定義されているクラスの内部からのみアクセス可
+        private String suit; //カードのスート
+        private int value; //カードの数値
+        
+        public Card(String suit, int value) {
+            this.suit = suit;
+            this.value = value;
+        }
+        
+        public int getValue() { //外部クラスから数値を取得
+            return value;
+        }
+        
+        public String getImageFileName() { //一部の数値をトランプ用に変換する処理
+            String valueStr;
+            switch (value) {
+                case 1: valueStr = "A"; break;
+                case 11: valueStr = "J"; break;
+                case 12: valueStr = "Q"; break;
+                case 13: valueStr = "K"; break;
+                default: valueStr = String.valueOf(value);
+            }
+            
+            String suitLetter = switch (suit) { //スートの扱いを簡略的にする処理
+                case "Spades" -> "S";
+                case "Hearts" -> "H";
+                case "Diamonds" -> "D";
+                case "Clubs" -> "C";
+                default -> "?";
+            };
+            
+            return valueStr + suitLetter + ".png"; //画像ファイルへのパスを生成
+        }
+        
+        public String toString() { //オブジェクトを文字列として表現するための処理
+            return value + " of " + suit;
+        }
+    }
+    
+    // ===== 内部クラス: Deck =====
+    private class Deck {
+        private List<Card> cards = new ArrayList<>();
+        private Random rand = new Random();
+        
+        public Deck() {
+            String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
+            for (String suit : suits) {
+                for (int i = 1; i <= 13; i++) {
+                    cards.add(new Card(suit, i));
+                }
+            }
+        }
+        
+        public void shuffle() {
+            Collections.shuffle(cards, rand);
+        }
+        
+        public Card drawCard() {
+            if (cards.isEmpty()) return null;
+            return cards.remove(0);
+        }
+        
+        public int remaining() {
+            return cards.size();
+        }
+    }
+}
