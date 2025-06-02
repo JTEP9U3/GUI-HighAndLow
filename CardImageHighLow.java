@@ -12,29 +12,47 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
     private Card currentCard, nextCard; //現在のカードと次のカードを保持
     private Deck deck; //山札
     private int score = 0; //スコアカウンター
-
+    
     public CardImageHighLow() { //ウィンドウのサイズやタイトルを設定
         setTitle("ハイローゲーム"); //ウィンドウのタイトルバーに「ハイローゲーム」に設定
         setSize(450, 500); //ウィンドウの横幅を450ピクセル、高さを500ピクセルに設定
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //ウィンドウの×ボタンでアプリケを終了
         setLocationRelativeTo(null); //ウィンドウを画面の中央に配置
-
+        
         deck = new Deck(); //新しい山札を作成
-
+        
         cardLabel = new JLabel(); //GUIのためにラベルを作成
         cardLabel.setHorizontalAlignment(SwingConstants.CENTER); //画像やテキストを水平方向,中央に配置する設定
-    
+        
         resultLabel = new JLabel("High または Low を選んでください", SwingConstants.CENTER); //GUIコンポーネントを作成して「High または Low を選んでください」を表示
         resultLabel.setFont(new Font("SansSerif", Font.BOLD, 16)); //ラベルのフォント設定
-
+        
         scoreLabel = new JLabel("スコア: 0", SwingConstants.CENTER); //スコア表示
         remainingLabel = new JLabel("残りカード: 52", SwingConstants.CENTER); //残りカード数表示
-
+        
         highButton = new JButton("High"); //ボタン作成「High」
         lowButton = new JButton("Low"); //ボタン作成「Low」
         resetButton = new JButton("もう一回"); //ボタン作成「もう一回」
         resetButton.setEnabled(false); //ボタンの初期状態を無効化（クリックできない状態）に設定する
-
+        
         highButton.addActionListener(e -> playRound(true)); //「High」ボタンに対してアクションを設定:「高い値を選択」
         lowButton.addActionListener(e -> playRound(false)); //「Low」ボタンに対してアクションを設定:「低い値を選択」
         resetButton.addActionListener(e -> resetGame()); //「リセット」ボタンに対してアクションを設定:「リセット処理」
+
+        JPanel buttonPanel = new JPanel(); //パネルの新規作成,ボタン用
+        buttonPanel.add(highButton); //ボタン設置「High」
+        buttonPanel.add(lowButton); //ボタン設置「Low」
+        buttonPanel.add(resetButton); //ボタン設置「もう一回」
+        
+        JPanel topPanel = new JPanel(new GridLayout(3, 1)); //パネルの新規作成,3行1列のグリッドレイアウトを設定
+        topPanel.add(resultLabel); //ラベル追加「resultLabel」
+        topPanel.add(scoreLabel); //ラベル追加「scoreLabel」
+        topPanel.add(remainingLabel); //ラベル追加「remainingLabel」
+        
+        setLayout(new BorderLayout()); //上下左右と中央にコンポーネントを配置できるレイアウト設定
+        add(topPanel, BorderLayout.NORTH); //レイアウトの上部に配置
+        add(cardLabel, BorderLayout.CENTER); //レイアウトの中央に配置
+        add(buttonPanel, BorderLayout.SOUTH); //レイアウトの下部に配置
+        
+        startGame(); //ゲームのスタート処理
+    }
