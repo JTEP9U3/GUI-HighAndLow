@@ -83,7 +83,8 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         
         if (nextCard.getValue() == currentCard.getValue()) {
             resultLabel.setText("引き分け！");
-            score = 0; //次のカードと現在のカードの値が一致した場合,「引き分け」と表示しスコアをリセット
+            score++;
+            currentCard = nextCard; //次のカードと現在のカードの値が一致した場合,「引き分け」と表示しスコアをリセット増やし,次のカードを現在のカードとして更新
         } else if (isWin) {
             resultLabel.setText("正解！");
             score++;
