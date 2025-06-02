@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ハイローゲーム</title>
+  <script src="https://cjrtnc.leaningtech.com/cheerpj/3.0/loader.js"></script>
+</head>
+<body>
+  <h1>ハイローゲーム</h1>
+  <div id="cheerpj-container" style="width: 450px; height: 500px;"></div>
+  
+  <script>
+    // cheerpjInit は最初に呼び出す
+    cheerpjInit();
+
+    // JARファイルをiframeにロード
+    cheerpjRunJar("CardImageHighLow.jar", {
+      canvasId: "cheerpj-container"
+    });
+  </script>
+</body>
+</html>
