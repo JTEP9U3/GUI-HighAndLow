@@ -171,11 +171,12 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
     }
     
     // ===== 内部クラス: Deck =====
-    private class Deck {
+    
+    private class Deck { //山札の管理
         private List<Card> cards = new ArrayList<>();
         private Random rand = new Random();
         
-        public Deck() {
+        public Deck() { //52枚のカードを生成し,各スートに対して1から13までのカードを作成,それを山札に追加
             String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
             for (String suit : suits) {
                 for (int i = 1; i <= 13; i++) {
@@ -184,16 +185,16 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
             }
         }
         
-        public void shuffle() {
+        public void shuffle() { //山札のシャッフル
             Collections.shuffle(cards, rand);
         }
         
-        public Card drawCard() {
+        public Card drawCard() { //山札からカードを引く
             if (cards.isEmpty()) return null;
             return cards.remove(0);
         }
         
-        public int remaining() {
+        public int remaining() { //カード残り枚数などの情報を取得
             return cards.size();
         }
     }
