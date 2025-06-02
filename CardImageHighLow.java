@@ -108,6 +108,6 @@ public class CardImageHighLow extends JFrame { //JFrameを継承することで�
         highButton.setEnabled(true);
         lowButton.setEnabled(true);
         resetButton.setEnabled(false);
-        //ゲームに再挑戦するためのゲームの初期化や設定を行う処理
+        //ゲームに再挑戦するための処理
     }
     
